@@ -87,5 +87,6 @@ Given the assignment's time constraint, these bonus-tier items were intentionall
 - No rate limiting, caching, or audit logging.
 - No automated test suite.
 - No CI/CD pipeline.
+- Transaction history has a working backend endpoint (`GET /wallet/transactions`) but no dedicated screen in the app yet — deprioritized under time constraints in favor of the core unlock flow.
 
 The assignment explicitly states a working, secure, well-structured solution is preferred over a feature-heavy one — these were left out deliberately, not missed.
