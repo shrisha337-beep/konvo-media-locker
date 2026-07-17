@@ -1,0 +1,6 @@
+node_modules/
+.env
+src/storage/originals/*
+!src/storage/originals/.gitkeep
+src/storage/previews/*
+!src/storage/previews/.gitkeep

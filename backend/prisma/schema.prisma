@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Neon connection string
+}
+
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  password      String        // bcrypt hash, never plaintext
+  walletBalance Int           @default(100) // predefined starting coins
+  createdAt     DateTime      @default(now())
+  media         Media[]       // media this user uploaded
+  purchases     Purchase[]    // media this user unlocked
+  transactions  Transaction[] // wallet history
+}
+
+model Media {
+  id           String     @id @default(uuid())
+  ownerId      String
+  owner        User       @relation(fields: [ownerId], references: [id])
+  price        Int        // coins required to unlock
+  previewPath  String     // blurred/low-res, safe to serve to anyone
+  originalPath String     // full-res, only ever read server-side after an access check
+  createdAt    DateTime   @default(now())
+  purchases    Purchase[]
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  mediaId   String
+  media     Media    @relation(fields: [mediaId], references: [id])
+  createdAt DateTime @default(now())
+
+  // one row per (user, media) pair, enforced by Postgres itself -
+  // a second unlock attempt fails at the DB level, no app-side race condition possible
+  @@unique([userId, mediaId])
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  amount    Int      // negative = coins spent
+  mediaId   String?  // which media this was for, if applicable
+  createdAt DateTime @default(now())
+}
