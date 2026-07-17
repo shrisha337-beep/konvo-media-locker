@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   picker: { height: 220, borderRadius: 12, borderWidth: 1, borderColor: '#ccc', justifyContent: 'center', alignItems: 'center', marginBottom: 16, overflow: 'hidden' },
   pickerText: { color: '#888' },
   preview: { width: '100%', height: '100%' },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 12, marginBottom: 16 },
+  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 12, marginBottom: 16, color: '#000' },
   button: { backgroundColor: '#111', padding: 14, borderRadius: 8 },
   buttonText: { color: '#fff', textAlign: 'center', fontWeight: '600' },
 });
