@@ -4,11 +4,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import client from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL } from '../config';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function FeedScreen({ navigation }) {
   const [media, setMedia] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { walletBalance, refreshWallet, logout } = useAuth();
+  const insets = useSafeAreaInsets(); 
 
   async function loadFeed() {
     const res = await client.get('/media/feed');
@@ -54,7 +56,7 @@ export default function FeedScreen({ navigation }) {
         )}
       />
 
-      <Pressable style={styles.uploadButton} onPress={() => navigation.navigate('Upload')}>
+      <Pressable style={[styles.uploadButton, { paddingBottom: 16 + insets.bottom }]} onPress={() => navigation.navigate('Upload')}>
         <Text style={styles.uploadButtonText}>+ Upload</Text>
       </Pressable>
     </View>
